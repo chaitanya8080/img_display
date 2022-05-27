@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div>
+        <div id="Navbar">
+             <div id="logo">
+                  <img src="" alt="">
+             </div>
+              <div>
+                <button >popular</button>
+              </div>
+             
+             <div id="searching">
+                 <input type="text" id="input">
+                 <button onclick="myfunction()">search</button>
+             </div>
+             
+        </div>
+
+
+        <div id="box"></div>
+    </div>
+
+    
+</body>
+</html>
+<script>
+    
+   
+   
+   let url = "https://api.unsplash.com/photos/?&query={flowers}&client_id=u6wEwe8Z6O3D74c9TUArDxu4pPExu2fjKq1W6MuXonc&per_page=50";
+
+
+   async function apiFetch(){
+
+    try {
+        const res = await fetch(url);
+       const data = await res.json();
+       console.log(data);
+       append(data);
+    } catch (error) {
+        console.log(error)
+    }
+      
+   }
+
+   apiFetch();
+
+   function append(data) {
+
+    let box = document.getElementById("box")
+    data.map(element => {
+        let image = document.createElement("img")
+        image.src = element.urls.small
+        let tit = document.createElement("p")
+        tit.innerHTML = element.user.name
+        let div = document.createElement("div")
+        div.setAttribute("class", "imgdiv")
+        div.append(image, tit)
+        box.append(div)
+    });
+
+}
+
+function myfunction(){
+    let input_val = document.getElementById("input").value
+  
+    localStorage.setItem("search_val",input_val)
+       window.location.href="myindexsearch.html"
+     
+   }
+   
+
+</script>
